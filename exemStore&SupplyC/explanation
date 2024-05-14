@@ -1,0 +1,41 @@
+This Solidity code implements a basic supply chain store contract (StoreSupChain) with age verification, product selection, and purchase functionality. The code utilizes Solidity version ^0.8.20.
+
+Contract Features:
+
+Status enum: Defines the current state of the contract (PENDING, LOGGED, PURCHASE, RECEIVE).
+idadeDezoito: Stores the minimum age requirement (18 years old).
+approved mapping: Tracks user approvals based on their address (address => bool).
+balance mapping: Stores the user's balance after a purchase (address => uint256).
+appleStore: Constant address of the Apple store (payable address).
+minimumValue: Minimum value required for a purchase (1 ether).
+Product string array: Lists available products (Iphone 15, MacBook, AppleWatch).
+
+Functions:
+
+get() (external view): Returns the current contract status.
+login(uint256 _idade) (external): Verifies user age and sets approval status if they are 18 or older. Returns notLegalAge indicating if the user is underage.
+loginTernario(uint256 _idade) (external view): Simplified version of login using a ternary operator to check age.
+compareStrings(string memory a, string memory b) (internal pure): Compares two strings using keccak256 hash for case-sensitive matching.
+executePurchase(string memory opcaoNum) (external payable, checkProduct modifier):
+Checks user approval.
+Compares the selected product (opcaoNum) with available products using compareStrings.
+Validates the purchase amount based on the selected product.
+Updates user balance.
+Updates contract status to PURCHASE.
+receiveOrnot(bool _receive) (external):
+Checks user approval.
+If _receive is true, transfers the contract balance to the Apple store address.
+Otherwise, transfers the user's balance back to their address.
+Updates contract status to RECEIVE.
+checkProduct modifier: Ensures the selected product exists before continuing with the purchase logic.
+
+Calling the Contract:
+
+Deploy the StoreSupChain contract to a blockchain network.
+Interact with the contract functions using a compatible web3 library or wallet.
+Call login with your age to verify and get approval.
+Call executePurchase specifying the desired product (opcaoNum) along with the required payment amount in Ether.
+Call receiveOrnot to either confirm receiving the product (transferring funds to the Apple store) or reject it (receiving a refund).
+
+Note:
+This is a simplified example for demonstration purposes. Real-world implementations would likely involve additional features and security considerations.
